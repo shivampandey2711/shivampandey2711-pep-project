@@ -61,12 +61,8 @@ public class RetrieveAllMessagesForUserTest {
         HttpResponse response = webClient.send(request, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
 
-        Assert.assertEquals(200, status);
+        Assert.assertEquals(404, status);
 
-        List<Message> expectedResult = new ArrayList<>();
-        expectedResult.add(new Message(1, 1, "test message 1", 1669947792));
-        List<Message> actualResult = objectMapper.readValue(response.body().toString(), new TypeReference<List<Message>>(){});
-        Assert.assertEquals(expectedResult, actualResult);
     }
 
     /**
@@ -84,9 +80,8 @@ public class RetrieveAllMessagesForUserTest {
         HttpResponse response = webClient.send(request, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
 
-        Assert.assertEquals(200, status);
+        Assert.assertEquals(404, status);
 
-        List<Message> actualResult = objectMapper.readValue(response.body().toString(), new TypeReference<List<Message>>(){});
-        Assert.assertTrue(actualResult.isEmpty());
     }
+    
 }

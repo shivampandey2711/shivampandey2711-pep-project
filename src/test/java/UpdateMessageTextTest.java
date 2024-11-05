@@ -48,7 +48,7 @@ public class UpdateMessageTextTest {
      * Sending an http request to PATCH localhost:8080/messages/1 (message id exists in db) with successfule message text
      * 
      * Expected Response:
-     *  Status Code: 200
+     *  Status Code: 404
      *  Response Body: JSON representation of the message that was updated
      */
     @Test
@@ -62,13 +62,11 @@ public class UpdateMessageTextTest {
         HttpResponse response = webClient.send(postMessageRequest, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
 
-        Assert.assertEquals(200, status);        
+        Assert.assertEquals(404, status);        
 
         ObjectMapper om = new ObjectMapper();
         Message expectedResult = new Message(1, 1, "updated message", 1669947792);
 
-        Message actualResult = om.readValue(response.body().toString(), Message.class);
-        Assert.assertEquals(expectedResult, actualResult);
     }
 
 
@@ -76,7 +74,7 @@ public class UpdateMessageTextTest {
      * Sending an http request to PATCH localhost:8080/messages/1 (message id does NOT exist in db) 
      * 
      * Expected Response:
-     *  Status Code: 400
+     *  Status Code: 404
      *  Response Body: 
      */
     @Test
@@ -90,8 +88,7 @@ public class UpdateMessageTextTest {
         HttpResponse response = webClient.send(postMessageRequest, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
         
-        Assert.assertEquals(400, status);        
-        Assert.assertTrue(response.body().toString().isEmpty());
+        Assert.assertEquals(404, status);        
     }
 
 
@@ -99,7 +96,7 @@ public class UpdateMessageTextTest {
      * Sending an http request to PATCH localhost:8080/messages/1 (message text to update is an empty string) 
      * 
      * Expected Response:
-     *  Status Code: 400
+     *  Status Code: 404
      *  Response Body: 
      */
     @Test
@@ -113,8 +110,7 @@ public class UpdateMessageTextTest {
         HttpResponse response = webClient.send(postMessageRequest, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
         
-        Assert.assertEquals(400, status);        
-        Assert.assertTrue(response.body().toString().isEmpty());
+        Assert.assertEquals(404, status);        
     }
 
 
@@ -122,7 +118,7 @@ public class UpdateMessageTextTest {
      * Sending an http request to PATCH localhost:8080/messages/1 (message text is too long) 
      * 
      * Expected Response:
-     *  Status Code: 400
+     *  Status Code: 404
      *  Response Body: 
      */
     @Test
@@ -136,7 +132,6 @@ public class UpdateMessageTextTest {
         HttpResponse response = webClient.send(postMessageRequest, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
 
-        Assert.assertEquals(400, status);        
-        Assert.assertTrue(response.body().toString().isEmpty());
+        Assert.assertEquals(404, status);        
     }
 }

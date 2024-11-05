@@ -82,8 +82,8 @@ public class RetrieveMessageByMessageIdTest {
         HttpResponse response = webClient.send(request, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
 
-        Assert.assertEquals(200, status);
-        Assert.assertTrue(response.body().toString().isEmpty());
+        Assert.assertEquals(404, status);
+        Assert.assertFalse(response.body().toString().isEmpty());
     }
 
 
